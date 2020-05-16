@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.gues.employmentinformationsystem.mapper.CollegeMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.gues.employmentinformationsystem.entity.College">
+    <!--@mbg.generated generated on Mon Mar 30 23:55:58 CST 2020.-->
+    <!--@Table college-->
+    <id column="college_id" jdbcType="VARCHAR" property="collegeId" />
+    <result column="college_name" jdbcType="VARCHAR" property="collegeName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Mar 30 23:55:58 CST 2020.-->
+    college_id, college_name, update_time, create_time, `status`
+  </sql>
+    <select id="selectAllCollegeByInfo" resultMap="BaseResultMap">
+        select * from college where status = "0"
+        <if test="collegeId != null and collegeId != ''">
+           and college_id = #{collegeId}
+        </if>
+        <if test="collegeName != null and collegeName != ''">
+            and college_name like concat('%', #{collegeName}, '%')
+        </if>
+    </select>
+</mapper>

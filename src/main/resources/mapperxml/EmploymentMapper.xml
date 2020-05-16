@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.gues.employmentinformationsystem.mapper.EmploymentMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.gues.employmentinformationsystem.entity.Employment">
+    <!--@mbg.generated generated on Mon Mar 30 23:56:37 CST 2020.-->
+    <!--@Table employment-->
+    <id column="employment_id" jdbcType="VARCHAR" property="employmentId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="employment_provence" jdbcType="VARCHAR" property="employmentProvence" />
+    <result column="employment_time" jdbcType="DATE" property="employmentTime" />
+    <result column="employment_city" jdbcType="VARCHAR" property="employmentCity" />
+    <result column="monthly_salary" jdbcType="VARCHAR" property="monthlySalary" />
+    <result column="employment_table_path" jdbcType="VARCHAR" property="employmentTablePath" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Mar 30 23:56:37 CST 2020.-->
+    employment_id, user_id, job_name, employment_provence, employment_time, employment_city, 
+    monthly_salary, employment_table_path, update_time, create_time, `status`
+  </sql>
+    <select id="selectEmploymentByInfo" resultMap="BaseResultMap">
+        select * from employment where status = "0"
+        <if test="userId != null and userId != ''">
+            and user_id = #{userId}
+        </if>
+    </select>
+</mapper>

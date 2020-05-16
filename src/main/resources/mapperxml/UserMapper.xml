@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.gues.employmentinformationsystem.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.gues.employmentinformationsystem.entity.User">
+    <!--@mbg.generated generated on Thu Apr 09 18:49:14 CST 2020.-->
+    <!--@Table user-->
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="parent_user_id" jdbcType="VARCHAR" property="parentUserId" />
+    <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sno" jdbcType="VARCHAR" property="sno" />
+    <result column="tno" jdbcType="VARCHAR" property="tno" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="yearschool" jdbcType="VARCHAR" property="yearschool" />
+    <result column="student_class" jdbcType="VARCHAR" property="studentClass" />
+    <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="institution_name" jdbcType="VARCHAR" property="institutionName" />
+    <result column="institution_address" jdbcType="VARCHAR" property="institutionAddress" />
+    <result column="institution_phonenumber" jdbcType="VARCHAR" property="institutionPhonenumber" />
+    <result column="legal_representative" jdbcType="VARCHAR" property="legalRepresentative" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Thu Apr 09 18:49:14 CST 2020.-->
+    user_id, parent_user_id, major_id, user_name, `password`, sno, tno, `name`, sex, 
+    age, yearschool, student_class, phonenumber, industry, institution_name, institution_address, 
+    institution_phonenumber, legal_representative, update_time, create_time, `type`, 
+    `status`
+  </sql>
+    <select id="selectUserByUserInfo" resultMap="BaseResultMap">
+        select * from user where status="0"
+            <if test="name != null and name !=''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="sno != null and sno !=''">
+                and sno like concat('%', #{sno}, '%')
+            </if>
+            <if test="tno != null and tno !=''">
+                and tno like concat('%', #{tno}, '%')
+            </if>
+            <if test="userName != null and userName !=''">
+                and user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="legalRepresentative != null and legalRepresentative !=''">
+                and legal_representative like concat('%', #{legalRepresentative}, '%')
+            </if>
+            <if test="type != null and type !=''">
+                and type like concat('%', #{type}, '%')
+            </if>
+            <if test="parentUserId != null and parentUserId !=''">
+                and parent_user_id = #{parentUserId}
+            </if>
+            <if test="password != null and password !=''">
+                and password = #{password}
+            </if>
+            <if test="userId != null and userId !=''">
+                and user_id = #{userId}
+            </if>
+        order by update_time desc
+    </select>
+</mapper>

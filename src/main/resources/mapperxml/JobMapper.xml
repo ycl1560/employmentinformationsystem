@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.gues.employmentinformationsystem.mapper.JobMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.gues.employmentinformationsystem.entity.Job">
+    <!--@mbg.generated generated on Sun Apr 05 22:55:30 CST 2020.-->
+    <!--@Table job-->
+    <id column="job_id" jdbcType="VARCHAR" property="jobId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="job_type" jdbcType="VARCHAR" property="jobType" />
+    <result column="job_years" jdbcType="VARCHAR" property="jobYears" />
+    <result column="job_major" jdbcType="VARCHAR" property="jobMajor" />
+    <result column="job_sex" jdbcType="VARCHAR" property="jobSex" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="academic_qualifications" jdbcType="VARCHAR" property="academicQualifications" />
+    <result column="monthly_salary" jdbcType="VARCHAR" property="monthlySalary" />
+    <result column="recruits_number" jdbcType="VARCHAR" property="recruitsNumber" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="job_detail" jdbcType="VARCHAR" property="jobDetail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sun Apr 05 22:55:30 CST 2020.-->
+    job_id, user_id, job_name, job_type, job_years, job_major, job_sex, age, academic_qualifications, 
+    monthly_salary, recruits_number, update_time, create_time, `status`, job_detail
+  </sql>
+   <!-- &lt;select id="getJobByJobNameOrUnitName" resultMap="BaseResultMap"&gt;
+        select * from job where job_name like concat('%', #{}, '%')  and status = "0"
+    &lt;/select&gt;-->
+    <select id="selectAllJobsDto" resultMap="BaseResultMap">
+        select * from job where status = "0" order by update_time desc
+    </select>
+    <select id="getJobByJobNameOrUnitName" resultMap="BaseResultMap">
+        select * from job jobs where status = "0"
+        <if test="jobName != null and jobName !=''">
+            and jobs.job_name like concat('%', #{jobName}, '%')
+        </if>
+        <if test="unitName != null and unitName !=''">
+            and jobs.user_id in(select users.user_id from user users where users.name  like concat('%', #{unitName}, '%'))
+        </if>
+        <if test="userId != null and userId !=''">
+            and jobs.user_id = #{userId}
+        </if>
+        order by update_time desc
+    </select>
+    <select id="selectJobByJobInfo" resultMap="BaseResultMap">
+        select * from job where status = "0"
+        <if test="jobName != null and jobName !=''">
+            and job_name like concat('%', #{jobName}, '%')
+        </if>
+        <if test="userId != null and userId !=''">
+            and user_id = #{userId}
+        </if>
+        <if test="jobType != null and jobType !=''">
+            and job_type = #{jobType}
+        </if>
+        order by update_time desc
+    </select>
+</mapper>

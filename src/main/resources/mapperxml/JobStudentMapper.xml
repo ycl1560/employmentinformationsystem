@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.gues.employmentinformationsystem.mapper.JobStudentMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.gues.employmentinformationsystem.entity.JobStudent">
+    <!--@mbg.generated generated on Tue Mar 31 00:09:49 CST 2020.-->
+    <!--@Table job_student-->
+    <id column="job_student_id" jdbcType="VARCHAR" property="jobStudentId" />
+    <result column="job_id" jdbcType="VARCHAR" property="jobId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="is_qualified" jdbcType="VARCHAR" property="isQualified" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Mar 31 00:09:49 CST 2020.-->
+    job_student_id, job_id, user_id, is_qualified, update_time, create_time, `status`
+  </sql>
+    <select id="getStudentAttentionJos" resultMap="BaseResultMap">
+        select * from job_student where status = "0"
+        <if test="userId != null and userId !=''">
+            and user_id = #{userId}
+        </if>
+        <if test="jobId != null and jobId !=''">
+            and job_id = #{jobId}
+        </if>
+        <if test="isQualified != null and isQualified !=''">
+            and is_qualified = #{isQualified}
+        </if>
+        order by create_time
+    </select>
+    <update id="updateByUserIdAndJobId">
+            update job_student set status = #{status} where user_id = #{userId} and job_id = #{jobId}
+    </update>
+
+</mapper>

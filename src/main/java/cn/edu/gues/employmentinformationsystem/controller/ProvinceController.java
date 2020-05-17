@@ -13,6 +13,11 @@ import java.util.List;
 public class ProvinceController {
     @Autowired
     ProvincesService provincesService;
+
+    /**
+     * 获取所有省份
+     * @return
+     */
     @RequestMapping(value = "/getAllProvince",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResult getAllProvince(){

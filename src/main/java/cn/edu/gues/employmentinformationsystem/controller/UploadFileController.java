@@ -4,11 +4,14 @@ import cn.edu.gues.employmentinformationsystem.entity.User;
 import cn.edu.gues.employmentinformationsystem.service.UploadFileService;
 import cn.edu.gues.employmentinformationsystem.utils.JsonResult;
 import cn.edu.gues.employmentinformationsystem.utils.StaticUtil;
+import cn.edu.gues.employmentinformationsystem.utils.date.JsonResult1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -28,7 +31,7 @@ public class UploadFileController {
             return JsonResult.ok(end,null);
         }
     }
-    //导入就业表
+    //导入就业图
     @ResponseBody
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST,produces="application/json;charset=UTF-8")
     public JsonResult uploadImg(@RequestParam(value = "file") MultipartFile file){
@@ -37,8 +40,23 @@ public class UploadFileController {
             return JsonResult.errorMsg("上传失败");
         }
         else{
-            String end = uploadFileService.uploadImg(file, StaticUtil.SAVE_URL, StaticUtil.FILE_TYPE);
-            return JsonResult.ok(end,null);
+            String src = uploadFileService.uploadImg(file, StaticUtil.SAVE_URL, StaticUtil.FILE_TYPE);
+            return JsonResult.ok(src,null);
+        }
+    }
+    //导入公告图
+    @ResponseBody
+    @RequestMapping(value = "/uploadNoticeImg", method = RequestMethod.POST,produces="application/json;charset=UTF-8")
+    public JsonResult1 uploadNoticeImg(@RequestParam(value = "file") MultipartFile file){
+
+        if(file == null){
+            return JsonResult1.errorMsg("上传失败");
+        }
+        else{
+            String src = uploadFileService.uploadImg(file, StaticUtil.SAVE_URL, StaticUtil.FILE_TYPE);
+            Map map = new HashMap();
+            map.put("src","http://127.0.0.1:8080/file/"+src);
+            return JsonResult1.build(0,"OK",map);
         }
     }
     //批量导入学生
